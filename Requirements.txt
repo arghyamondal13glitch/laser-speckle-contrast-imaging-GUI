@@ -1,0 +1,147 @@
+# =============================================================================
+# LSCI Platform — Python Dependencies
+# Small Animal Speckle Contrast Imaging Platform v2.1
+# TEBI Lab · IIT Bombay
+#
+# Tested on: Python 3.10.x  |  Windows 10/11 (64-bit)
+#
+# Install with:
+#   pip install -r requirements.txt
+#
+# IMPORTANT — Two packages in this file CANNOT be installed via pip alone:
+#   scTDC      → Camera vendor SDK  (see ENVIRONMENT.md, Section 3)
+#   PyDAQmx    → NI-DAQmx runtime required first (see ENVIRONMENT.md, Section 4)
+#
+# For a clean install, use a virtual environment:
+#   python -m venv lsci_env
+#   lsci_env\Scripts\activate       # Windows
+#   pip install -r requirements.txt
+# =============================================================================
+
+
+# -----------------------------------------------------------------------------
+# IMAGE PROCESSING & DISPLAY
+# -----------------------------------------------------------------------------
+
+Pillow>=10.0.0
+# Used for: Image.open, ImageTk.PhotoImage, Resampling.LANCZOS,
+#           16-bit PNG save (mode='I;16'), image resizing in all GUI views.
+
+opencv-python>=4.8.0
+# Used for: cv2.imwrite (16-bit PNG fallback), frame processing.
+#           Headless build is sufficient; no GUI window from OpenCV is used.
+
+
+# -----------------------------------------------------------------------------
+# NUMERICAL COMPUTING & SCIENTIFIC STACK
+# -----------------------------------------------------------------------------
+
+numpy>=1.24.0
+# Used for: Frame stacking (np.stack), speckle contrast computation
+#           (std/mean), coordinate arrays, galvo regression matrices,
+#           intensity profile extraction, all array math throughout.
+
+scipy>=1.11.0
+# Used for: scipy.io.savemat — saving captures as MATLAB-compatible .mat files.
+
+scikit-learn>=1.3.0
+# Used for: sklearn.linear_model.LinearRegression — maps image (pixel)
+#           coordinates → galvo angles in combined_function().
+
+
+# -----------------------------------------------------------------------------
+# DATA VISUALIZATION
+# -----------------------------------------------------------------------------
+
+matplotlib>=3.7.0
+# Used for: FigureCanvasTkAgg (embedded plots), intensity profile display,
+#           viridis colormap for speckle contrast view, colorbar rendering,
+#           plt.imsave for speckle preview images.
+
+
+# -----------------------------------------------------------------------------
+# GUI FRAMEWORK
+# -----------------------------------------------------------------------------
+
+customtkinter>=5.2.0
+# Used for: CTkButton (galvo controls), CTkStringVar, modern-styled widgets
+#           in the control panel (galvo enable/disable, port selectors).
+
+tkdial>=0.3
+# Used for: tkdial.Dial — interactive rotary dials for Galvo Motor X and Y
+#           angle input (±40° range). Custom widget, not part of stdlib tkinter.
+
+# Note: tkinter itself is part of Python's standard library.
+#       If missing on Linux/Mac, install via: sudo apt install python3-tk
+#       On Windows with the standard Python installer it is always included.
+
+
+# -----------------------------------------------------------------------------
+# HARDWARE COMMUNICATION
+# -----------------------------------------------------------------------------
+
+pymodbus>=3.5.0
+# Used for: ModbusSerialClient (RTU mode) — communicates with:
+#             • Relay controller  (slave ID 2, registers 0–3)
+#             • Galvo Motor X/Y   (slave ID 2, registers 0–6, float32)
+#             • Z-axis controller (slave ID 2)
+#             • XYZ stereotaxic stage (slave ID 1, register address 1)
+#           Protocol: 9600 baud, 8N1, timeout=10s (galvo/relay/z-axis).
+#           XYZ stage also 9600 baud.
+
+pyserial>=3.5
+# Used for: serial.tools.list_ports (COM port auto-detection),
+#           serial.Serial for laser current monitor (19200 baud, ASCII,
+#           reads lines like "Current: 450.00").
+
+
+# -----------------------------------------------------------------------------
+# DOCUMENT & FILE I/O
+# -----------------------------------------------------------------------------
+
+python-docx>=1.0.0
+# Used for: docx.Document — generates .docx metadata/timing logs after
+#           every multi-capture session, intensity profile export,
+#           and timing analysis reports.
+
+
+# -----------------------------------------------------------------------------
+# AUDIO
+# -----------------------------------------------------------------------------
+
+pygame>=2.5.0
+# Used for: pygame.mixer — imported at module level for optional audio
+#           feedback / alert sounds. The mixer is initialized, but sound
+#           playback is triggered conditionally during operations.
+
+
+# -----------------------------------------------------------------------------
+# NATIONAL INSTRUMENTS DAQ
+# -----------------------------------------------------------------------------
+
+PyDAQmx>=1.4.0
+# Used for: PyDAQmx.Task(), CreateDOChan("Dev1/port0/line0"),
+#           WriteDigitalScalarU32 — generates digital pulse trains for
+#           forepaw electrical stimulation via NI-DAQ card.
+#
+# ⚠️  PREREQUISITE: NI-DAQmx runtime (free) must be installed BEFORE
+#     pip-installing PyDAQmx. The pip package is only a Python wrapper.
+#     Download: https://www.ni.com/en/support/downloads/drivers/download.ni-daq-mx.html
+#     Minimum version: NI-DAQmx 19.0
+#     Expected device name in code: "Dev1" (configure in NI MAX if different)
+
+
+# =============================================================================
+# NOT INSTALLABLE VIA PIP — see ENVIRONMENT.md for setup instructions
+# =============================================================================
+
+# scTDC
+#   Camera vendor SDK for the scientific TDC camera (1920×1440, 12-bit).
+#   Provides: scTDC.scTDClib(), scTDC.Camera(), pipe.read()
+#   Setup:
+#     1. Obtain SDK from the camera vendor.
+#     2. Place scTDClib.dll in the same directory as new_GUI_sc_55.py.
+#     3. Place tdc_gpx3.ini (camera init config) in the same directory.
+#     4. The code calls os.add_dll_directory(script_dir) to expose the DLL.
+#   The Python package (scTDC) may be installable as a wheel from the vendor;
+#   contact vendor support for the correct wheel file for your Python version.
