@@ -422,7 +422,7 @@ This software was developed as part of a research project at IIT Bombay. It is i
 | Role | Name | Contact |
 |---|---|---|
 | Principal Investigator | Dr. Hari M. Varma | TEBI Lab, IIT Bombay |
-| GUI Developer | Arghya Mondal | 30006166@iit.ac.in |
+| GUI Developer | Arghya Mondal | arghyamondal13@gmail.com |
 
 **For technical issues:** Refer to the Troubleshooting section in [`docs/user_guide.md`](docs/user_guide.md) before raising an issue.
 
