@@ -234,6 +234,17 @@ See [`requirements.txt`](requirements.txt) for the full pinned dependency list.
 
 ---
 
+## 📖 Primary Documentation
+
+The complete **177-page User Manual** is the recommended starting point
+for all lab users:
+👉 [Laser Speckle Imaging User Manual (PDF)](docs/Laser_Speckle_Imaging_User_Manual.pdf)
+
+The `docs/` folder also contains developer-focused markdown references
+(architecture, API, data formats, installation guide).
+
+---
+
 ## Quick Start
 
 ### 1. Install dependencies
@@ -406,6 +417,7 @@ lsci-platform/
 | [`docs/user_guide.md`](docs/user_guide.md) | GUI walkthrough, multi-capture, stimulation sync |
 | [`docs/data_formats.md`](docs/data_formats.md) | MAT, PNG, DOCX, PKL, JSON format specs |
 | [`docs/api_reference.md`](docs/api_reference.md) | All classes, methods, parameters |
+| [`docs/Laser_Speckle_Imaging_User_Manual.pdf`](docs/Laser_Speckle_Imaging_User_Manual.pdf) | **Primary user manual** — comprehensive operational guide (scientific background, hardware setup, experimental workflows, safety, troubleshooting) |
 
 ---
 
